@@ -7,3 +7,13 @@
         | <%= link_to 'Delete', post_path(@post),
                                           :data => {:confirm => "You sure m8?",
                                                     :method => "delete"}%>
+
+<h3>Tags: </h3>
+<ul>
+  <% @post.tags.each do |tag| %>
+    <li><%= link_to tag.name, tag_path(tag) %>  <%= link_to 'edit tag', edit_post_tag_path(@post, tag) %></li>
+    <% end %>
+
+</ul>
+
+<h4><%= link_to "Add A Tag", new_post_tag_path(@post) %></h4>

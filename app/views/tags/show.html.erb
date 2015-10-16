@@ -1,0 +1,9 @@
+<h1>Blog posts with the tag <em><%= @tag.name %></em></h1>
+
+<% @tag.posts.each do |post| %>
+  <%= link_to post.title, post_path(post) %>
+<% end %>
+
+<br><br>
+
+<%= link_to "Back to Posts", posts_path %>

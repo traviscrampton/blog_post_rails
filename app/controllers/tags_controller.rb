@@ -8,15 +8,15 @@ class TagsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @tag = @post.tags.new(tag_params)
+    @post.tags.push(@tag)
     if @tag.save
-      redirect_to post_path(@tag.post)
+      redirect_to post_path(@post)
     else
       render :new
     end
   end
 
   def show
-    @post = Post.find(params[:post_id])
     @tag = Tag.find(params[:id])
   end
 
@@ -29,7 +29,7 @@ class TagsController < ApplicationController
     @post = Post.find(params[:post_id])
     @tag = Tag.find(params[:id])
     if @tag.update(tag_params)
-      redirect_to post_path(@tag.post)
+      redirect_to post_path(@post)
     else
       render :edit
     end
