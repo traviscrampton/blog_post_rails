@@ -1,0 +1,19 @@
+
+
+   <% if @posts.any? %>
+      <ul>
+        <% @posts.each do |post| %>
+         <li>
+           <%= link_to post.title, post_path(post) %> |
+                    <%= link_to "Edit", edit_post_path(post) %> |
+                    <%= link_to "Delete", post_path(post),
+                          :data => {:confirm => "You sure m8?",
+                                  :method => "delete"}%>
+         </li>
+          <% end %>
+       </ul>
+   <% else %>
+    <p>There Will Be No dancing in Bomont</p>
+    <% end %>
+
+    <%= link_to 'Add A Post', new_post_path %>
