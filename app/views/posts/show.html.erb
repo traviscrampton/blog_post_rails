@@ -32,14 +32,32 @@
            <p>- <% if comment.user %>
              <%= comment.user.email%>:
              <% end %>
-             <%= comment.body %><%= link_to 'Edit', edit_post_comment_path(@post, comment) %></p>
+
+             <% if  current_user && current_user.id == comment.user_id %>
+
+               <%= comment.body %> | <%= link_to 'Edit', edit_post_comment_path(@post, comment) %> |
+               <%= link_to "Delete", post_comment_path(@post, comment),
+                                   :data => {:confirm => "Ya sure mate?",
+                                             :method => "delete"} %></li></p>
+
+                <% else  %>
+                <%= comment.body %>
+                <% end %>
+
+
         </div>
 
     </div>
    <% end %>
 
-<%= form_for [@post, @comment] do |f| %>
-  <%= f.label :comment %>
-  <%= f.text_field :body %>
-  <%= f.submit %>
-<% end %>
+   <hr>
+
+<% if current_user %>
+  <%= form_for [@post, @comment] do |f| %>
+    <%= f.label :comment %>
+    <%= f.text_field :body %>
+    <%= f.submit %>
+  <% end %>
+  <% else %>
+  <h2>If you'd like to comment please <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "Log in", new_user_session_path %> </h2>
+  <% end %>
