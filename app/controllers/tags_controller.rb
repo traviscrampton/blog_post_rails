@@ -40,7 +40,7 @@ class TagsController < ApplicationController
     @post = Post.find(params[:post_id])
     @tag = Tag.find(params[:id])
     @tag.destroy
-    redirect_to post_path(@tag.post)
+    redirect_to post_path(@post)
   end
 
   private

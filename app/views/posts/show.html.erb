@@ -12,9 +12,34 @@
 <h3>Tags: </h3>
 <ul>
   <% @post.tags.each do |tag| %>
-    <li><%= link_to tag.name, tag_path(tag) %>  <%= link_to 'edit tag', edit_post_tag_path(@post, tag) %></li>
+    <li><%= link_to tag.name, tag_path(tag) %>  <%= link_to 'edit tag', edit_post_tag_path(@post, tag) %> |
+      <%= link_to "Delete", post_tag_path(@post, tag),
+                            :data => {:confirm => "Ya sure mate?",
+                                      :method => "delete"} %></li>
     <% end %>
 
 </ul>
 
 <h4><%= link_to "Add A Tag", new_post_tag_path(@post) %></h4>
+
+
+<h3>Comments</h3>
+<hr>
+
+    <div class="comments">
+      <% @comments.each do |comment| %>
+        <div class="comment">
+           <p>- <% if comment.user %>
+             <%= comment.user.email%>:
+             <% end %>
+             <%= comment.body %></p>
+        </div>
+
+    </div>
+   <% end %>
+
+<%= form_for [@post, @comment] do |f| %>
+  <%= f.label :comment %>
+  <%= f.text_field :body %>
+  <%= f.submit %>
+<% end %>
