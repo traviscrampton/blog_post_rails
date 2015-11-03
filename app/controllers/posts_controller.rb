@@ -32,7 +32,10 @@ class PostsController < ApplicationController
     def update
       @post = Post.find(params[:id])
       if @post.update(post_params)
-        redirect_to post_path(@post)
+        respond_to do |format|
+          format.html {redirect_to posts_path}
+          format.js
+        end
       else
         render :edit
       end

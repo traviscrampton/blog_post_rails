@@ -2,15 +2,17 @@ class CommentsController < ApplicationController
 
 
   def create
-    @user = current_user
     @post = Post.find(params[:post_id])
+    @user = User.find(current_user)
     @comment = @post.comments.new(comment_params)
-    @comment.user = @user
-
+    @comment.user_id = @user.id
     if @comment.save
-      redirect_to post_path(@post)
+      respond_to do |format|
+        format.html {redirect_to posts_path}
+        format.js
+      end
     else
-      @comment.errors.full_messages.each { |msg| string += msg + ". "}
+      render post_path(@post)
     end
   end
 
